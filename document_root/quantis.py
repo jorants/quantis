@@ -12,9 +12,11 @@ def docmd(cmd,input):
 
 
 def exists():
-    res = docmd(["EasyQuantis","-l"],"")
-    return not ("No Quantis USB device" in res)
-
+    try:
+        res = docmd(["EasyQuantis","-l"],"")
+        return not ("No Quantis USB device" in res)
+    except OSError:
+        return False
 
 
 
@@ -23,6 +25,8 @@ def get_ints(n,minint=0,maxint=10):
     f = NamedTemporaryFile(delete=False)
     name = f.name
     f.close()
+    if not exists():
+        return [random.randrange(minint,maxint+1) for i in range(n)]
     res = docmd(["EasyQuantis","-u","0","-n",str(n),"--min",str(minint),"--max",str(maxint),"-i",name,"-s",","],"")
     if not "Done" in res:
         return [random.randrange(minint,maxint+1) for i in range(n)]
