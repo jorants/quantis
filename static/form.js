@@ -1,8 +1,9 @@
 $(document).ready(
 	 function(){
 		 // make sure the field is empty when back is pressed
-		$("#text").val("")
-
+		 if($(".error").length < 1){
+			 $("#text").val("")
+		 }
 
 		 $("#quantum").click(function(){
 			 $.get("/rand/100",function(data){

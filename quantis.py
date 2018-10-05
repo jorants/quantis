@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, render_template
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import TextAreaField
 from wtforms.validators import DataRequired, Length
-from wtforms.widgets import TextArea
+
 
 import randomstr
 from tests import all_tests
@@ -21,9 +21,8 @@ def rand(n):
 
 
 class MainForm(FlaskForm):
-    text = StringField(
+    text = TextAreaField(
         'Text',
-        widget=TextArea(),
         validators = [Length(100, 100, "Type het vak vol.")]
     )
 
