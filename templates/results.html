@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<title>Quantum = cool</title>
+ <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+<center>
+<table>
+	{% for res in results %}
+	{% set class = "ok" if res.passed else "bad" %}
+	<tr>
+		<td class='{{ class }}'>{{ res.name }}</td>
+		<td class='{{ class }}'>{{ res.score  }}</td>
+		<td class='{{ class }}'>{{"Passed" if res.passed else "Failed" }}</td>
+	</tr>
+	{% endfor %}
+</table>
+
+{% if passed %}
+<h1>Wow, quantum!!!!</h1>
+<img src='/static/quantum.gif' />
+
+{% else %}
+<h1>You Puny Human!!!</h1>
+<img src='/static/human.gif' />
+{% endif %}
+
+
+</center>
+</body>
+
+</html>

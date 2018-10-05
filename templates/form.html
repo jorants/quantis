@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+<title>Quantum = cool</title>
+<link rel="stylesheet" type="text/css" href="/static/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script src="/static/form.js">
+</script>
+</head>
+
+<body>
+	<center>
+	<form action="#" method="post">
+		{{ form.csrf_token }}
+		{% for err in form.text.errors %}
+		<span class="error">{{ err }}</span><br /><br />
+		{% endfor  %}
+		{{ form.text() }}
+		<br />
+		<input type="submit" value="Test" class="button" />
+	</form>
+	<br />
+	<button id="quantum">Quantum String</button>
+</center></body>
+</html>

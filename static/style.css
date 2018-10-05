@@ -1,0 +1,44 @@
+.bad{
+	background-color: #FFBBBB ;
+}
+
+.ok{
+	background-color: #BBFFBB ;
+}
+
+
+td{
+	border: 1px solid black;
+	padding: 5px;
+	}
+
+table{
+border-collapse: collapse;
+	}
+
+
+textarea{
+	border: 3px solid black;
+	height: 370px;
+	width: 750px;
+	font-size: 60px;
+	text-transform: lowercase;
+}
+
+input[type="submit"], button{
+	background-color: #BB0000;
+	border: 1px solid black;
+	color: white;
+	padding: 5px 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 30px;
+}
+
+ .error{
+	 color: #BB0000;
+	 font-weight: bold;
+	 padding: 20px;
+	 font-size:35px;
+ }

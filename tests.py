@@ -1,58 +1,4 @@
-<!doctype html>
-<html>
-<head>
-<title>Quantum = cool</title>
-<style>
-
-.txtbox{
-    border: 3px solid black;
-    height: 300px;
-    width: 500px;
-}
-
-.button{
-
-background-color: #BB0000;
-border: 1px solid black;
-color: white;
-padding: 5px 10px;
-text-align: center;
-text-decoration: none;
-display: inline-block;
-font-size: 16px;
-}
-
-
-.bad{
-    background-color: #FFBBBB ;
-}
-
-.ok{
-    background-color: #BBFFBB ;
-}
-
-
-td{
-    border: 1px solid black;
-    padding: 5px;
-    }
-
-table{
-border-collapse: collapse;
-    }
-
-</style>
-
-</head>
-<body>
-<center>
-<table>
-
-<?python
-
-
 import math
-import random
 import string
 
 keyboard = ["qwertyuiop","asdfghjkl","zxcvbnm"]
@@ -102,16 +48,6 @@ def hop_test(data):
         return True,0
 
 def avgdist_test(data):
-    """
-    hops_list = []
-    for j in range(100):
-        rand = "".join([random.choice(string.ascii_lowercase) for i in range(len(data))])
-        _,hops,__ = keydata(rand)
-        hops_list.append(hops)
-
-    print max(hops_list),min(hops_list)
-    return False,0.
-    """
     _,avg,__ = keydata(data)
 
     avgmax,avgmin = 3.76414323958, 2.67223279453
@@ -123,15 +59,6 @@ def avgdist_test(data):
     else:
         return True,0
 
-"""
-hops_list = []
-for j in range(1000):
-rand = "".join([random.choice(string.ascii_lowercase) for i in range(len(data))])
-_,__,hops = keydata(rand)
-hops_list.append(hops)
-hops_list.sort()
-print hops_list[5],hops_list[-5]
-return False,0."""
 
 def alternations_test(data):
 
@@ -156,21 +83,6 @@ def bz2test(data):
     return len(s)/avr > .980 , max(0,1- len(s)/avr)
 
 def frequency_test(data):
-    """
-    hops_list = []
-    for j in range(1000):
-        rand = "".join([random.choice(string.ascii_lowercase) for i in range(len(data))])
-        score = .0
-        for c in string.ascii_lowercase:
-            score += abs(rand.count(c) / float(len(rand)) - 1./26.)
-        hops_list.append(score)
-    hops_list.sort()
-    print hops_list[-20:]
-    print len(filter(lambda x: x<.533,hops_list))
-    
-    return False,0.
-    score = 0.0
-    """
     score = .0
     for c in string.ascii_lowercase:
         score += abs(data.count(c) / float(len(data)) - 1./26.)
@@ -192,13 +104,11 @@ def entropy_test(data):
     else:
         return True, 0
     
-
 def row_test(data):
     def row_freq_abs(data):
         rows = map(lambda x: to_coord(x)[1],data)
         score = .0
         for c in [0,1,2]:
-            print abs(rows.count(c) / float(len(rows)))
             score += abs(rows.count(c) / float(len(rows)) - len(keyboard[c])/26.)
         return score
     score = row_freq_abs(data)
@@ -218,51 +128,20 @@ tests = [
     entropy_test
     ]
 
-frmt_ok = """
-<tr>
-  <td class='ok'>%s</td>
-  <td class='ok'>%.03f</td>
-  <td class='ok'>Passed</td> 
-</tr>
-"""
-frmt_bad = """
-<tr>
-  <td class='bad'>%s</td>
-  <td class='bad'>%.03f</td>
-  <td class='bad'>Failed</td> 
-</tr>
-"""
-
-scores = []
-all_ok = True
-for t in tests:
-    passed,score = t(POST['data'][0].lower())
-    if passed:
-        println(frmt_ok % (t.__name__ , score))
-    else:
-        all_ok = False
-        println(frmt_bad % (t.__name__ , score))
-    scores.append(score)
-
-
-import numpy as np
-score = np.linalg.norm(np.array(scores))
-
-nohtyp?>
-</table>
-
-<?python
-
-if not all_ok:
-    println("<h1>You Puny Human!!!</h1>")
-    println("<img src='human.gif' />")
-else:
-    println("<h1>Wow, quantum is cool!</h1>")
-    println("<img src='quantum.gif' />");
-#println( score)
-
-nohtyp?>
-</center>
-</body>
-
-</html>
+def all_tests(s):
+    scores = []
+    
+    all_ok = True
+    for t in tests:
+        passed,score = t(s.lower())
+        scores.append(
+            {
+                'name':   t.__name__,
+                'score':  score,
+                'passed': passed
+            }
+        )
+        all_ok = all_ok and passed
+    
+    score = sum(s['score']**2 for s in scores)**.5
+    return all_ok, score, scores
