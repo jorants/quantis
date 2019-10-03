@@ -2,10 +2,11 @@ import subprocess
 from subprocess import PIPE
 import random
 from tempfile import NamedTemporaryFile
+from functools import reduce
 
 def docmd(cmd,input):
     sp = subprocess.Popen(cmd,stdin = PIPE,stdout = PIPE)
-    return sp.communicate(input = input)[0]
+    return sp.communicate(input = input)[0].decode('ascii')
 
 def exists():
     try:
