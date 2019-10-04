@@ -18,7 +18,7 @@ def dist(x,y):
 
 def keydata(s):
     n = len(s)
-    coords = map(to_coord, s)
+    coords = list(map(to_coord, s))
     prev = coords[0]
     avg_dist = 0.0
     short_hops = 0
@@ -31,7 +31,7 @@ def keydata(s):
         if (prev[0] < 4.5) != (cur[0] < 4.5):
             alternations += 1. / (n-1.)
         prev = cur
-    l = len(filter(lambda coord: coord[0] < 4.5, coords))
+    l = len(list(filter(lambda coord: coord[0] < 4.5, coords)))
     r = n - l
     return short_hops,avg_dist,alternations
 
@@ -79,7 +79,7 @@ def alternations_test(data):
 def bz2test(data):
     import bz2
     avr = 301.
-    s = bz2.compress(data*1000)
+    s = bz2.compress((data*1000).encode('ascii'))
     return len(s)/avr > .980 , max(0,1- len(s)/avr)
 
 def frequency_test(data):
@@ -106,7 +106,7 @@ def entropy_test(data):
     
 def row_test(data):
     def row_freq_abs(data):
-        rows = map(lambda x: to_coord(x)[1],data)
+        rows = list(map(lambda x: to_coord(x)[1],data))
         score = .0
         for c in [0,1,2]:
             score += abs(rows.count(c) / float(len(rows)) - len(keyboard[c])/26.)
